@@ -59,7 +59,7 @@ function handleFileSelect(evt) {
    function start(e) {
      document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-     var dropZone= document.getElemerrtById('drop_zone');
+     var dropZone= document.getElementById('drop_zone');
      dropZone.addEventListener('dragover', handleDragOver, false);
      dropZone.addEventListener('drop', handleFileSelect_drag, false);
    } -
