@@ -50,8 +50,7 @@
     <path id="a1" d="M0 50 C150 150 100 -50 300 50" stroke="#000" fill="none" transform="translate(175,215)"></path>
   </defs>
   <text>
-     <textPath href="#a1">這是隨著路徑跑的文字，很酷吧
-    </textPath>
+     
   </text>
 
   <g transform="translate(64,448)">
