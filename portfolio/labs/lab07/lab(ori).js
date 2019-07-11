@@ -31,26 +31,13 @@ function analyze() {
 
       subs = remain.slice(m, n+1); // z 也要包含
       console.log('subs = ' + subs);
-      
-      var subs2 = subs.replace('440','480');
-      var subs2 = subs2.replace('462','262');
 
-      var path = image.path(subs).fill('none').stroke({color:'red', wdth:5}).draggable();
-
-      path.plot(subs2).draggable();
-
-      var newPath = Snap.path.toCubic(subs);
-      console.log('newPath.length = ' + newPath.length);
-
-      newPath.forEach(function(element){
-        console.log(element);
-      });
-
+      var path=image.path(subs).fill('none').draggable();
       remain = remain.slice(n+1); // z 也要移除
-      console.log('remain = ' + remain);
+      //console.log('remain = ' + remain);
 
-      var pathString = "M382 371C440 281 80 162 82 314 84 467 324 462 382 371z"
-      var newPath = Snap.path.toCubic(pathString);
+      //var pathString = "M382 371C440 281 80 162 82 314 84 467 324 462 382 371z"
+      //var newPath = Snap.path.toCubic(pathString);
 
       var newPath = [];
       var move = '';
@@ -68,7 +55,7 @@ function analyze() {
       console.log('move.length = ' + move.length);
       console.log('move = ' + move);
 
-       https://stackoverflow.com/questions/40282519/split-string-by-multiple-spaces-nodejs
+      // https://stackoverflow.com/questions/40282519/split-string-by-multiple-spaces-nodejs
       var temp;
       temp = move.trim().split(/\s+/);
       console.log('temp.length = ' + temp.length);
