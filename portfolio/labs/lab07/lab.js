@@ -16,44 +16,74 @@ function analyze() {
       i++;
 
       m = remain.search("<path");
-      console.log('m = ' + m);
+      console.log('<path   m = ' + m);
       remain = remain.slice(m);
 
       if ( m == -1){ // skip 
         return;
       }
+      m = remain.search('d=')
+      console.log('d=  m+ ' + m);
+      remain = remain.slice(m);
+
 
       m = remain.search(/m/i);
-      console.log('m = ' + m);
+      console.log('m   m = ' + m);
 
-      n = remain.search('z"'); // /z/i
-      console.log('n = ' + n);
+      n = remain.search(/z/i); // /z/i
+      console.log('z   n = ' + n);
 
       subs = remain.slice(m, n+1); // z 也要包含
       console.log('subs = ' + subs);
-      
+
+
       var subs2 = subs.replace('440','480');
       var subs2 = subs2.replace('462','262');
 
-      var path = image.path(subs).fill('none').stroke({color:'red', wdth:5}).draggable();
-
+      var path=image.path(subs).fill('black').stroke({color:'gray', width:5}).draggable();
+      
       path.plot(subs2).draggable();
-
+      //path.animate(2000).plot(sub2).loop(true, true).draggable();
+      
       var newPath = Snap.path.toCubic(subs);
-      console.log('newPath.length = ' + newPath.length);
+      console.log(' newPath.length = ' + newPath.length);
+      //console.table(' newPath= ' + newPath);
 
-      newPath.forEach(function(element){
+      newPath.forEach(function(element) {
         console.log(element);
       });
 
-      remain = remain.slice(n+1); // z 也要移除
-      console.log('remain = ' + remain);
+      for(var i=0; i < (newPath.length - 1); i++) {
+        for(var j = 0; j < newPath[i].length; j++) {
+          console.log(' newPath[' + i + '][j] = ' + newPath[i][j] );
+        }
 
-      var pathString = "M382 371C440 281 80 162 82 314 84 467 324 462 382 371z"
-      var newPath = Snap.path.toCubic(pathString);
 
-      var newPath = [];
-      var move = '';
+       if ( i == 0) { // M i == 0
+        var circle = image.circle(10).fill('pink').stroke('blue').move(newPath[i][1]-5, newath[i][2]-10).draggable();
+      } else { // C
+        var circle = image.circle(10).fill('pink').stroke('blue').move(newPath[i][1]-5, newath[i][2]-10).draggable();
+        var circle = image.circle(10).fill('pink').stroke('blue').move(newPath[i][3]-5, newath[i][4]-10).draggable();
+        var circle = image.circle(10).fill('pink').stroke('blue').move(newPath[i][5]-5, newath[i][6]-10).draggable();
+      }
+    }
+
+    /*
+    //for(var i = 0; i < newPath.length; i++){
+    //for(var i = 0; i < (newPath.length - 1); i++){  // 抵銷因為 z 而多出了的最後三個點
+    for(var i = 0; i < (newPath.length - 1); i++){  // 抵銷因為 z 而多出了的最後三個點
+     var segment = newPath[i], point;
+
+        segment.shift();
+        point = setUpPoint(segment);
+      }
+
+*/
+remain = remain.slice(n+1); // z 也要移除
+
+
+
+
 
       m = subs.search(/c/i);
       console.log('m = subs.search(/c/i);');
@@ -64,20 +94,26 @@ function analyze() {
       console.log('n = ' + n);
 
 
+      //move = 382 371
+      var move='';
       move = subs.slice(1, m);
       console.log('move.length = ' + move.length);
       console.log('move = ' + move);
 
-       https://stackoverflow.com/questions/40282519/split-string-by-multiple-spaces-nodejs
+     move = move.replace(',', ' ')
+     console.log('move.length= ' +move.length);
+     console.log('move= ' + move);
+
+
+      // https://stackoverflow.com/questions/40282519/split-string-by-multiple-spaces-nodejs
       var temp;
       temp = move.trim().split(/\s+/);
+
       console.log('temp.length = ' + temp.length);
       console.log('temp = ' + temp);
       console.log('temp[0] = ' + temp[0]);
       console.log('temp[1] = ' + temp[1]);
 
-
-      
       var x, y;
       x = parseInt(temp[0],10);
       y = parseInt(temp[1],10);
@@ -86,12 +122,7 @@ function analyze() {
 
       var circle = image.circle(20).fill('red').stroke('blue').move(x-10, y-10).draggable();
 
-      /*
-      temp.forEach(function(element) {
-        newPath.push(element);
-      });
-      */
-
+      var newPath = [];
       console.log('newPath = ' + newPath);
 
       subs = subs.slice(m+1, n);  // C 也要移除 (大寫C), z 也要移除 
@@ -99,6 +130,26 @@ function analyze() {
 
       temp = subs.trim().split(/\s+/);
 
+     
+     function start(e) {
+
+      $(document).mousemone(function(event){
+        var p = $("#svgimage2");
+
+        var position= p.position();
+
+      console.log('position = ' + position.left+',' +position.top);
+     
+     var myX = event.pageX -Math.round(position.left);
+     var myY = event.pageY -Math.round(position.top)+ 500;
+
+     $("#s5").html("<div style='position:absolute; border-style:none; TOP:"
+      +event.pageY + "px; LEFT:"
+      +event.pageY + "px;'>"+"&nbsp&nbsp&nbsp&nbsp("
+      +myX +","
+      +myY +")"
+      +"</div");
+});
       /*
       temp.forEach(function(element) {
         newPath.push(element);
@@ -122,8 +173,8 @@ function analyze() {
       }
 
       */
-    } while (m > 0);
-}
+     while (m > 0);
+
 
 function saveText(text, filename) {
   var a = document.createElement('a');
